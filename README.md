@@ -28,9 +28,13 @@ Det er et samlet sted hvor man kan snakke om, anbefale og invitere til treff. Is
 
 - Hvorfor er løsningen nyttig?
 
+Den gjør det klarere for deg og vennene dine hvem som skal bli med på et arrangement og man kan lese seg opp på spill før man møtes, så man ikke blir helt forvirret.
+
 ### Målgruppe
 
 Hvem er løsningen laget for?
+
+Løsningen er laget for de som spiller og liker brettspill, og de som er på spillekvelder.
 
 ---
 
@@ -38,23 +42,25 @@ Hvem er løsningen laget for?
 
 Systemet skal minst ha følgende funksjoner:
 
-1. Funksjon 1  
-2. Funksjon 2  
-3. Funksjon 3  
-4. Funksjon 4  
-5. Funksjon 5  
+1. Registrering
 
-*(Legg til flere hvis nødvendig)*
+2. Innlogging
+
+3. Søk
+
+4. Invitér
+
+5. Anmelde
 
 ---
 
 ## 3. Teknologivalg
 
 ### Programmeringsspråk
-- Eksempel: Python / JavaScript / C#
+- Python, Javascript
 
 ### Rammeverk / Plattform / Spillmotor
-- Eksempel: Flask / Unity / Godot / .NET
+- Flask
 
 ### Database
 - MariaDB
@@ -62,7 +68,7 @@ Systemet skal minst ha følgende funksjoner:
 ### Verktøy
 - GitHub
 - GitHub Projects (Kanban)
-- Eventuelle andre verktøy
+- Figma
 
 ---
 
