@@ -20,7 +20,7 @@ Beskriv kort hva dere skal lage.
 
 - Hva er prosjektet?
 
-Ideén er å ha en nettside hvor folk kan snakke sammen om brettspill og søke de opp for å få info om de. Litt inspirasjon kommmer av nettsider som IMDB hvor du kan søke opp og legge igjen en anmeldelse. Uansett må sies at brettspill-siden legger mer vekt på å være sosialt medie. 
+Ideén er å ha en nettside hvor folk kan snakke sammen om brettspill, anmelde de og søke de opp for å få info om de. Litt inspirasjon kommmer av nettsider som IMDB hvor du kan søke opp og legge igjen en anmeldelse. Uansett må sies at brettspill-siden legger mer vekt på å være sosialt medie. 
 
 - Hvilket problem løser det?
 
@@ -46,9 +46,9 @@ Systemet skal minst ha følgende funksjoner:
 
 2. Innlogging
 
-3. Søk
+3. Søke etter brettspill
 
-4. Invitér
+4. Invitér til spillkveld
 
 5. Anmelde
 
@@ -87,6 +87,7 @@ Systemet skal minst ha følgende funksjoner:
 *(Minst 2–4 tabeller)*
 
 ### Eksempel på tabellstruktur
+
 ```sql
 User(
   id INT PRIMARY KEY,
@@ -94,3 +95,10 @@ User(
   email VARCHAR(100),
   password VARCHAR(255)
 )
+```
+
+**Kilder:**
+
+dotenv: [https://www.geeksforgeeks.org/python/how-to-create-and-use-env-files-in-python/](https://www.geeksforgeeks.org/python/how-to-create-and-use-env-files-in-python/)
+
+bcrypt hashing: [https://www.geeksforgeeks.org/python/hashing-passwords-in-python-with-bcrypt/](https://www.geeksforgeeks.org/python/hashing-passwords-in-python-with-bcrypt/)
