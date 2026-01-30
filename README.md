@@ -77,8 +77,8 @@ Systemet skal minst ha følgende funksjoner:
 ### Oversikt over tabeller
 
 **Tabell 1:**
-- Navn:
-- Beskrivelse:
+- Navn: user
+- Beskrivelse: Innholder brukerinfo om email, brukernavn og et hashet og saltet passord.
 
 **Tabell 2:**
 - Navn:
@@ -91,9 +91,9 @@ Systemet skal minst ha følgende funksjoner:
 ```sql
 User(
   id INT PRIMARY KEY,
-  username VARCHAR(50),
-  email VARCHAR(100),
-  password VARCHAR(255)
+  username VARCHAR(50) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  password CHAR(60) NOT NULL
 )
 ```
 
@@ -102,3 +102,11 @@ User(
 dotenv: [https://www.geeksforgeeks.org/python/how-to-create-and-use-env-files-in-python/](https://www.geeksforgeeks.org/python/how-to-create-and-use-env-files-in-python/)
 
 bcrypt hashing: [https://www.geeksforgeeks.org/python/hashing-passwords-in-python-with-bcrypt/](https://www.geeksforgeeks.org/python/hashing-passwords-in-python-with-bcrypt/)
+
+bytte brukernavn Mysql: [https://dev.mysql.com/doc/refman/8.4/en/rename-user.html](https://dev.mysql.com/doc/refman/8.4/en/rename-user.html)
+
+få liste av alle brukere i Mysql: [https://phoenixnap.com/kb/mysql-show-users](https://phoenixnap.com/kb/mysql-show-users)
+
+Bytte passord i Mysql: [https://dev.mysql.com/doc/refman/8.4/en/alter-user.html](https://dev.mysql.com/doc/refman/8.4/en/alter-user.html)
+
+Bcrypt CHAR(60): [https://stackoverflow.com/questions/5881169/what-column-type-length-should-i-use-for-storing-a-bcrypt-hashed-password-in-a-d](https://stackoverflow.com/questions/5881169/what-column-type-length-should-i-use-for-storing-a-bcrypt-hashed-password-in-a-d)
