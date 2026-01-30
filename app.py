@@ -24,9 +24,17 @@ spk_db = db_connect()
 cursor = spk_db.cursor()
 
 def create_tables():
+    # lager user-tabell
     # bør bruke backticks på navn user pga det er en ting i mysql fra før
     cursor.execute("CREATE TABLE `user` (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255) NOT NULL UNIQUE, email VARCHAR(255) NOT NULL UNIQUE, password CHAR(60) NOT NULL, role VARCHAR(50))")
+    # lager boardgame-tabell
+    cursor.execute("CREATE TABLE boardgame (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, creator VARCHAR(255), publisher VARCHAR(255), description TEXT DEFAULT CHARSET=utf8mb4)")
     spk_db.commit()
+
+# Route for hjemside
+@app.route("/")
+def index():
+    return render_template(url_for("index"))
 
 # Route for registrering
 @app.route("/register", methods=["GET", "POST"])

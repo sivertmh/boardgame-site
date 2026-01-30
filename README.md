@@ -57,7 +57,7 @@ Systemet skal minst ha følgende funksjoner:
 ## 3. Teknologivalg
 
 ### Programmeringsspråk
-- Python, Javascript
+- Python
 
 ### Rammeverk / Plattform / Spillmotor
 - Flask
