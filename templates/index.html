@@ -4,11 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage - SPK</title>
+    <title>Homepage - IBDb</title>
 </head>
 
 <body>
-
+    <nav>
+        <h1>Internet Boardgame Database</h1>
+        <ul>
+            <li><a class="active" href="#">Homepage</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+            <li><a href="{{ url_for('login') }}">Log In</a></li>
+            <li><a href="{{ url_for('reviews') }}">Log In</a></li>
+            {% if admin %}
+            <!--Her skal det være lenke som fører til side for å legge til nye brettspill-->
+            {% endif %}
+        </ul>
+    </nav>
 </body>
 
 </html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register a BHoardgame - SPK</title>
+</head>
+
+<body>
+    <h2>Registrer Ny Bruker</h2>
+    <form method="POST" action="{{ url_for('register') }}">
+        <label for="name">Name of boardgame:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="creator">Creator:</label><br>
+        <input type="creator" id="creator" name="creator" required><br><br>
+
+        <label for="publisher">Publisher:</label><br>
+        <input type="publisher" id="publisher" name="publisher" required><br><br>
+
+        <label for="description">Description:</label><br>
+        <input type="description" id="description" name="description" required><br><br>
+
+        <button type="submit">Registrer</button>
+    </form>
+
+    {% if melding %}
+    <p style="color: green;">{{ melding }}</p>
+    {% endif %}
+</body>
+
+</html>

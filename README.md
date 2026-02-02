@@ -2,7 +2,7 @@
 
 ##  Prosjekttittel
 
-**Spillkveld (SPK)**
+**Internet Boardgame Database (IBDb)**
 
 ---
 
@@ -110,3 +110,5 @@ få liste av alle brukere i Mysql: [https://phoenixnap.com/kb/mysql-show-users](
 Bytte passord i Mysql: [https://dev.mysql.com/doc/refman/8.4/en/alter-user.html](https://dev.mysql.com/doc/refman/8.4/en/alter-user.html)
 
 Bcrypt CHAR(60): [https://stackoverflow.com/questions/5881169/what-column-type-length-should-i-use-for-storing-a-bcrypt-hashed-password-in-a-d](https://stackoverflow.com/questions/5881169/what-column-type-length-should-i-use-for-storing-a-bcrypt-hashed-password-in-a-d)
+
+Datatyper i SQL: [https://www.geeksforgeeks.org/sql/sql-data-types/](https://www.geeksforgeeks.org/sql/sql-data-types/)
