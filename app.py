@@ -39,11 +39,18 @@ def create_tables():
         CREATE TABLE boardgame (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
+            year_published INT,
             creator VARCHAR(255),
             publisher VARCHAR(255),
             description TEXT CHARACTER SET utf8mb4
             )""")
     spk_db.commit()
+    
+    try:
+        create_tables()
+        print("Tabeller ble laget!")
+    except:
+        print("Tabeller ble ikke laget (finnes kanskje fra før)")
 
 # Route for hjemside
 @app.route("/")
@@ -73,6 +80,26 @@ def register():
         return redirect(url_for("login"))
 
     return render_template("register.html")
+
+# Route for registrering av brettspill
+@app.route("/register_boardgame", methods=["GET", "POST"])
+def register_boardgame():
+    if request.method == "POST":
+        bg_name = request.form['name']
+        bg_name = request.form['name']
+        creator = request.form['creator']
+        publisher = request.form['publisher']
+        desc = request.form['description']
+        
+        cursor.execute("INSERT INTO boardgame (name, year_published, creator, publisher, description) VALUES (%s, %s, %s, %s)", (bg_name, creator, publisher, desc))
+        spk_db.commit()
+        cursor.close()
+        spk_db.close()
+        
+        flash("Boardgame registered!", "success")
+        return redirect(url_for("register_boardgame"))
+    
+    return render_template("register_boardgame.html")
 
 # Route for innlogging
 @app.route("/login", methods=["GET", "POST"])

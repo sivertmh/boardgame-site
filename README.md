@@ -8,7 +8,7 @@
 
 ## Deltakere
 
-Individuelt prosjekt
+Sivert M. H. (Individuelt prosjekt)
 
 ---
 
@@ -34,7 +34,7 @@ Den gjør det klarere for deg og vennene dine hvem som skal bli med på et arran
 
 Hvem er løsningen laget for?
 
-Løsningen er laget for de som spiller og liker brettspill, og de som er på spillekvelder.
+Løsningen er laget for de som spiller og liker brettspill, og de som vil finne ut mer om de. Det kan være før de velger å kjøpe det f.eks..
 
 ---
 
@@ -48,7 +48,7 @@ Systemet skal minst ha følgende funksjoner:
 
 3. Søke etter brettspill
 
-4. Invitér til spillkveld
+4. Registrere brettspill (hvis du er admin)
 
 5. Anmelde
 

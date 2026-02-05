@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register a BHoardgame - SPK</title>
+    <title>Register a Boardgame - IBDb</title>
 </head>
 
 <body>
     <h2>Registrer Ny Bruker</h2>
-    <form method="POST" action="{{ url_for('register') }}">
+    <form method="POST" action="{{ url_for('register_boardgame') }}">
         <label for="name">Name of boardgame:</label><br>
         <input type="text" id="name" name="name" required><br><br>
 
@@ -22,7 +22,7 @@
         <label for="description">Description:</label><br>
         <input type="description" id="description" name="description" required><br><br>
 
-        <button type="submit">Registrer</button>
+        <button type="submit">Register boardgame</button>
     </form>
 
     {% if melding %}
