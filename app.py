@@ -20,10 +20,11 @@ def db_connect():
         port=os.environ.get("DB_PORT")
     )
 
-spk_db = db_connect()
-cursor = spk_db.cursor()
-
 def create_tables():
+    
+    conn = db_connect()
+    cursor = conn.cursor()
+    
     # lager user-tabell
     # bør bruke backticks på navn user pga det er en ting i mysql fra før
     cursor.execute("""
@@ -44,23 +45,35 @@ def create_tables():
             publisher VARCHAR(255),
             description TEXT CHARACTER SET utf8mb4
             )""")
-    spk_db.commit()
+    conn.commit()
     
-    try:
-        create_tables()
-        print("Tabeller ble laget!")
-    except:
-        print("Tabeller ble ikke laget (finnes kanskje fra før)")
+try:
+    create_tables()
+    print("Tabeller ble laget!")
+except:
+    print("Tabeller ble ikke laget. (finnes kanskje fra før)")
 
 # Route for hjemside
 @app.route("/")
 def index():
-    return render_template("index.html")
+    
+    conn = db_connect()
+    cursor = conn.cursor()
+
+    # henter info som skal vises på forside i en tuple
+    cursor.execute("SELECT name, year_published, publisher FROM boardgame")
+    bg_info = cursor.fetchall()
+    
+    return render_template("index.html", bg_info=bg_info)
 
 # Route for registrering
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        
+        conn = db_connect()
+        cursor = conn.cursor()
+        
         username = request.form['username']
         epost = request.form['email']
         # kode fra geeksforgeeks.org for hashing med bcrypt
@@ -72,13 +85,12 @@ def register():
         password_hash_str = password_hash_bytes.decode()
 
         cursor.execute("INSERT INTO user (username, email, password) VALUES (%s, %s, %s)", (username, epost, password_hash_str))
-        spk_db.commit()
+        conn.commit()
         cursor.close()
-        spk_db.close()
+        conn.close()
         
         flash("User registered!", "success")
         return redirect(url_for("login"))
-
     return render_template("register.html")
 
 # Route for registrering av brettspill
@@ -86,22 +98,26 @@ def register():
 def register_boardgame():
     if request.method == "POST":
         bg_name = request.form['name']
-        bg_name = request.form['name']
+        year = request.form['year']
         creator = request.form['creator']
         publisher = request.form['publisher']
         desc = request.form['description']
         
-        cursor.execute("INSERT INTO boardgame (name, year_published, creator, publisher, description) VALUES (%s, %s, %s, %s)", (bg_name, creator, publisher, desc))
-        spk_db.commit()
+        conn = db_connect()
+        cursor = conn.cursor()
+        
+        cursor.execute("INSERT INTO boardgame (name, year_published, creator, publisher, description) VALUES (%s, %s, %s, %s, %s)", (bg_name, year, creator, publisher, desc))
+        conn.commit()
         cursor.close()
-        spk_db.close()
+        conn.close()
         
         flash("Boardgame registered!", "success")
         return redirect(url_for("register_boardgame"))
-    
     return render_template("register_boardgame.html")
 
-# Route for innlogging
+# Route for innlogging.
+# Basert på kode fra tidligere oppgave.
+# Bcrypt istedenfor Werkzeug.
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -110,19 +126,21 @@ def login():
         
         conn = db_connect()
         cursor = conn.cursor(dictionary=True)
+        
+        # henter brukernavn
         cursor.execute("SELECT * FROM user WHERE username=%s", (username,))
         user = cursor.fetchone()
         cursor.close()
         conn.close()
         
-        if not user:
-            return render_template("login.html", error_message="Invalid username or password")
-        
+        # henter passord og gjør om til bytes
         db_password = user['password'].encode('utf-8')
 
         if user and bcrypt.checkpw(password, db_password):
             session['username'] = user['username']
+            session['rolle'] = user['rolle']
             
             return render_template("login.html", login_message="You are now logged in!")
-
+        else:
+            return render_template("login.html", error_message="Invalid username or password")
     return render_template("login.html")

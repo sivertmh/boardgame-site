@@ -11,15 +11,23 @@
     <nav>
         <h1>Internet Boardgame Database</h1>
         <ul>
-            <li><a class="active" href="#">Homepage</a></li>
+            <li><a class="active" href="{{ url_for('index') }}">Homepage</a></li>
             <li><a href="{{ url_for('register') }}">Register</a></li>
             <li><a href="{{ url_for('login') }}">Log In</a></li>
-            <li><a href="{{ url_for('reviews') }}">Log In</a></li>
-            {% if admin %}
-            <!--Her skal det være lenke som fører til side for å legge til nye brettspill-->
-            {% endif %}
         </ul>
     </nav>
+    <main>
+        {% if bg_info %}
+        {% for i in bg_info %}
+        <div class="bg-info-cont">
+            <p class="bg-name-txt">{{ i[0] }} ({{ i[1] }})</p><br>
+            <p class="bg-publisher-txt">{{ i[2] }}</p>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>Looks empty here...</p>
+        {% endif %}
+    </main>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 # Prosjektbeskrivelse – IT-utviklingsprosjekt (2IMI)
 
-##  Prosjekttittel
+## Prosjekttittel
 
 **Internet Boardgame Database (IBDb)**
 
@@ -16,25 +16,27 @@ Sivert M. H. (Individuelt prosjekt)
 
 ### Beskrivelse
 
-Beskriv kort hva dere skal lage.
-
 - Hva er prosjektet?
 
-Ideén er å ha en nettside hvor folk kan snakke sammen om brettspill, anmelde de og søke de opp for å få info om de. Litt inspirasjon kommmer av nettsider som IMDB hvor du kan søke opp og legge igjen en anmeldelse. Uansett må sies at brettspill-siden legger mer vekt på å være sosialt medie. 
+Ideen er å lage en nettside for folk som er interreserte i brettspill. Brukeren skal kunne logge inn, registrere, søke og få info om brettspill, og mer. Litt inspirasjon kommmer av nettsider som imdb.com og boardgamegeek.com hvor du kan søke opp og legge igjen en anmeldelse, så jeg kan prøve å lage en slik funksjon.
 
 - Hvilket problem løser det?
 
-Det er et samlet sted hvor man kan snakke om, anbefale og invitere til treff. Istedenfor å invitere på en meldingsgruppe og få en haug med meldinger tilbake, kan det funke mer som f.eks. Spond, en enkel oversikt over hvem som er og ikke er med.
+Nettsiden skal la deg som sagt søke opp brettspill og legge igjen anmeldelser. Dette kan man bruke som info til om man vil prøve et nytt et eller ikke, eller si noe om hvilke målgruppper spillet passer. Da slipper du å komme til spillekvelden med et spill ingen liker!
 
 - Hvorfor er løsningen nyttig?
 
-Den gjør det klarere for deg og vennene dine hvem som skal bli med på et arrangement og man kan lese seg opp på spill før man møtes, så man ikke blir helt forvirret.
+Nettsiden funker som et oppslagsverk for brettspill. Det betyr at du kan søke opp spill du allerede har for å se hva andre enn deg synes om det. Dersom du ikke har et spill kan du bruke nettsiden til å finne et nytt et som er gøy.
 
 ### Målgruppe
 
 Hvem er løsningen laget for?
 
-Løsningen er laget for de som spiller og liker brettspill, og de som vil finne ut mer om de. Det kan være før de velger å kjøpe det f.eks..
+Løsningen er laget for de som spiller og liker brettspill, og de som vil finne ut mer om de. Det kan f.eks. være før de velger å kjøpe det, eller ikke pga dårlige anmeldelser.
+
+### Refleksjon
+
+
 
 ---
 
@@ -57,15 +59,19 @@ Systemet skal minst ha følgende funksjoner:
 ## 3. Teknologivalg
 
 ### Programmeringsspråk
+
 - Python
 
 ### Rammeverk / Plattform / Spillmotor
+
 - Flask
 
 ### Database
+
 - MariaDB
 
 ### Verktøy
+
 - GitHub
 - GitHub Projects (Kanban)
 - Figma
@@ -77,23 +83,26 @@ Systemet skal minst ha følgende funksjoner:
 ### Oversikt over tabeller
 
 **Tabell 1:**
+
 - Navn: user
 - Beskrivelse: Innholder brukerinfo om email, brukernavn og et hashet og saltet passord.
 
 **Tabell 2:**
-- Navn:
-- Beskrivelse:
 
-*(Minst 2–4 tabeller)*
+- Navn: boardgame
+- Beskrivelse: Inneholder navnet (til brettspillet), hvilket år det kom ut, de som lagde det, de som publiserte det og en beskrivelse. 
+
+_(Minst 2–4 tabeller)_
 
 ### Eksempel på tabellstruktur
 
 ```sql
-User(
-  id INT PRIMARY KEY,
-  username VARCHAR(50) NOT NULL,
-  email VARCHAR(100) NOT NULL,
-  password CHAR(60) NOT NULL
+`user` (
+id INT AUTO_INCREMENT PRIMARY KEY,
+username VARCHAR(255) NOT NULL UNIQUE,
+email VARCHAR(255) NOT NULL UNIQUE,
+password CHAR(60) NOT NULL,
+role VARCHAR(50)
 )
 ```
 
@@ -112,3 +121,5 @@ Bytte passord i Mysql: [https://dev.mysql.com/doc/refman/8.4/en/alter-user.html]
 Bcrypt CHAR(60): [https://stackoverflow.com/questions/5881169/what-column-type-length-should-i-use-for-storing-a-bcrypt-hashed-password-in-a-d](https://stackoverflow.com/questions/5881169/what-column-type-length-should-i-use-for-storing-a-bcrypt-hashed-password-in-a-d)
 
 Datatyper i SQL: [https://www.geeksforgeeks.org/sql/sql-data-types/](https://www.geeksforgeeks.org/sql/sql-data-types/)
+
+Innholdstekst osv av Boardgamegeek: [https://boardgamegeek.com](https://boardgamegeek.com)
