@@ -21,7 +21,6 @@ def db_connect():
     )
 
 def create_tables():
-    
     conn = db_connect()
     cursor = conn.cursor()
     
@@ -93,28 +92,6 @@ def register():
         return redirect(url_for("login"))
     return render_template("register.html")
 
-# Route for registrering av brettspill
-@app.route("/register_boardgame", methods=["GET", "POST"])
-def register_boardgame():
-    if request.method == "POST":
-        bg_name = request.form['name']
-        year = request.form['year']
-        creator = request.form['creator']
-        publisher = request.form['publisher']
-        desc = request.form['description']
-        
-        conn = db_connect()
-        cursor = conn.cursor()
-        
-        cursor.execute("INSERT INTO boardgame (name, year_published, creator, publisher, description) VALUES (%s, %s, %s, %s, %s)", (bg_name, year, creator, publisher, desc))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        
-        flash("Boardgame registered!", "success")
-        return redirect(url_for("register_boardgame"))
-    return render_template("register_boardgame.html")
-
 # Route for innlogging.
 # Basert på kode fra tidligere oppgave.
 # Bcrypt istedenfor Werkzeug.
@@ -134,13 +111,57 @@ def login():
         conn.close()
         
         # henter passord og gjør om til bytes
-        db_password = user['password'].encode('utf-8')
+        if user:
+            db_password = user['password'].encode('utf-8')
 
-        if user and bcrypt.checkpw(password, db_password):
+        if bcrypt.checkpw(password, db_password):
             session['username'] = user['username']
-            session['rolle'] = user['rolle']
+            session['role'] = user['role']
             
-            return render_template("login.html", login_message="You are now logged in!")
+            return render_template("index.html", login_message="You are now logged in!")
         else:
-            return render_template("login.html", error_message="Invalid username or password")
+            return render_template("index.html", error_message="Invalid username or password")
     return render_template("login.html")
+
+# Route for registrering av brettspill
+@app.route("/register_boardgame", methods=["GET", "POST"])
+def register_boardgame():
+    
+    conn = db_connect()
+    cursor = conn.cursor()
+    
+    # kodesnutt fikset/minimalisert ved hjelp av KI
+    if 'username' not in session or 'role' not in session:
+        flash("You must be logged in.")
+        return redirect(url_for("login"))
+    
+    # samme som sistnevnt
+    if session['role'] != 'admin':
+        flash("Admins only.")
+        return redirect(url_for("index"))
+    
+    if request.method == "POST":
+        bg_name = request.form['name']
+        year = request.form['year']
+        creator = request.form['creator']
+        publisher = request.form['publisher']
+        desc = request.form['description']
+        
+        conn = db_connect()
+        cursor = conn.cursor()
+        
+        cursor.execute("""INSERT INTO boardgame 
+                            (name, 
+                            year_published, 
+                            creator, 
+                            publisher, 
+                            description) VALUES (%s, %s, %s, %s, %s)""", 
+                            (bg_name, year, creator, publisher, desc))
+
+        conn.commit()
+        cursor.close()
+        conn.close()
+        
+        flash("Boardgame registered!", "success")
+        return redirect(url_for("register_boardgame"))
+    return render_template("index.html")

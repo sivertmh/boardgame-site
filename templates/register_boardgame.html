@@ -8,30 +8,40 @@
 </head>
 
 <body>
-    <h2>Register a Boardgame</h2>
-    <form method="POST" action="{{ url_for('register_boardgame') }}">
-        <label for="name">Name of boardgame:</label><br>
-        <input type="text" id="name" name="name" required><br><br>
+    <main>
+        <h2>Register a Boardgame</h2>
+        <form method="POST" action="{{ url_for('register_boardgame') }}">
+            <label for="name">Name of boardgame:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
 
-        <label for="year">Year:</label><br>
-        <input type="text" id="year" name="year"><br><br>
+            <label for="year">Year:</label><br>
+            <input type="text" id="year" name="year"><br><br>
 
-        <label for="creator">Creator:</label><br>
-        <input type="text" id="creator" name="creator"><br><br>
+            <label for="creator">Creator:</label><br>
+            <input type="text" id="creator" name="creator"><br><br>
 
-        <label for="publisher">Publisher:</label><br>
-        <input type="text" id="publisher" name="publisher"><br><br>
+            <label for="publisher">Publisher:</label><br>
+            <input type="text" id="publisher" name="publisher"><br><br>
 
-        <label for="description">Description:</label><br>
-        <input type="text" id="description" name="description"><br><br>
-        <textarea name="description" placeholder="Description of the boardgame..."></textarea>
+            <label for="description">Description:</label><br>
+            <input type="text" id="description" name="description"><br><br>
+            <textarea name="description" placeholder="Description of the boardgame..."></textarea>
 
-        <button type="submit">Register boardgame</button>
-    </form>
+            <button type="submit">Register boardgame</button>
+        </form>
 
-    {% if melding %}
-    <p style="color: green;">{{ melding }}</p>
-    {% endif %}
+        <!-- Koden under er tatt fra flask sin nettside med dokumentasjon -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class=flashes>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block body %}{% endblock %}
+    </main>
 </body>
 
 </html>

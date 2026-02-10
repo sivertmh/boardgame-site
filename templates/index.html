@@ -17,6 +17,28 @@
         </ul>
     </nav>
     <main>
+        <!-- Om du kommer fra login-siden kjører disse -->
+        {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+
+        {% if login_message %}
+        <p style="color: green;">{{ login_message }}</p>
+        {% endif %}
+
+        <!-- Koden under er tatt fra flask sin nettside med dokumentasjon -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class=flashes>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block body %}{% endblock %}
+
+        <!-- Viser alle brettspill fra db her på forsiden -->
         {% if bg_info %}
         {% for i in bg_info %}
         <div class="bg-info-cont">

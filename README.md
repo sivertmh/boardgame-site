@@ -123,3 +123,5 @@ Bcrypt CHAR(60): [https://stackoverflow.com/questions/5881169/what-column-type-l
 Datatyper i SQL: [https://www.geeksforgeeks.org/sql/sql-data-types/](https://www.geeksforgeeks.org/sql/sql-data-types/)
 
 Innholdstekst osv av Boardgamegeek: [https://boardgamegeek.com](https://boardgamegeek.com)
+
+Flash med flask: [https://flask.palletsprojects.com/en/stable/patterns/flashing/](https://flask.palletsprojects.com/en/stable/patterns/flashing/)
