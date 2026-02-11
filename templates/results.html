@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - IBDb</title>
+    <title>Search Results</title>
 </head>
 
 <body>
@@ -31,33 +31,10 @@
         </ul>
     </nav>
     <main>
-        <h2>Log In</h2>
-        <form method="POST" action="{{ url_for(" login") }}">
-            <label for="username">username:</label><br>
-            <input type="text" id="username" name="username" required><br><br>
+        <h1>Results for: </h1>
+        <ul>
 
-            <label for="password">password:</label><br>
-            <input type="password" id="password" name="password" required><br><br>
-
-            <button type="submit">Log In</button>
-        </form>
-
-        <p>Don't have a user? You can sign up <a href="{{ url_for(" register") }}">here.</a></p>
-
-        {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-        {% endif %}
-
-        <!-- Koden under er tatt fra flask sin nettside med dokumentasjon -->
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul class=flashes>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
         </ul>
-        {% endif %}
-        {% endwith %}
     </main>
 </body>
 

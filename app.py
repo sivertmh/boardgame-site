@@ -180,3 +180,25 @@ def register_boardgame():
 def logout():
     session.clear()
     return redirect(url_for("index"))
+
+# Funksjon som brukes i search-route.
+# Creds til Ochoaprojects. Se kilder. Modifisert.
+def perform_search(query):
+    conn = db_connect()
+    cursor = conn.cursor()
+
+    # Kjører søk i database med query fra bruker.
+    cursor.execute("SELECT * FROM boardgame WHERE username LIKE %s", (query,))
+    results = cursor.fetchall()
+
+    conn.close()
+
+    return results
+
+# Route for søk.
+# Creds til Ochoaprojects. Se kilder.
+@app.route('/search', methods=['POST'])
+def search():
+    query = request.form['query']
+    results = perform_search(query)
+    return render_template('results.html', query=query, results=results)

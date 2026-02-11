@@ -8,6 +8,28 @@
 </head>
 
 <body>
+    <nav>
+        <a href="{{ url_for('index') }}">
+            <h1>Internet Boardgame Database</h1>
+        </a>
+        <ul>
+            <li><a class="active" href="{{ url_for('index') }}">Homepage</a></li>
+            <li><a href="{{ url_for('login') }}">Log In</a></li>
+            <!-- Lenke vises bare ved riktig rolle (admin/editor) -->
+            {% if session.get("role_id") in (1, 2) %}
+            <li><a href="{{ url_for('register_boardgame') }}">Register Boardgame</a></li>
+            {% endif %}
+            {% if session.get("username") or session.get("role_id") %}
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+            {% endif %}
+            <!-- Søkefelt -->
+            <!-- Creds til Ochoaprojects. Se kilder. Modifisert. -->
+            <form action="/search" method="POST">
+                <button type="submit">&#128270;</button>
+                <input type="text" name="query" placeholder="Search">
+            </form>
+        </ul>
+    </nav>
     <h2>Registrer a New User</h2>
     <form method="POST" action="{{ url_for('register') }}">
         <label for="username">Username:</label><br>

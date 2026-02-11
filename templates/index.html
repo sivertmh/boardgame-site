@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage - IBDb</title>
+    <link rel="stylesheet" href="../static/stylesheets/style.css">
 </head>
 
 <body>
@@ -22,15 +23,17 @@
             {% if session.get("username") or session.get("role_id") %}
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             {% endif %}
+            <!-- Søkefelt -->
+            <!-- Creds til Ochoaprojects. Se kilder. Modifisert. -->
+            <form action="/search" method="POST">
+                <button type="submit">&#128270;</button>
+                <input type="text" name="query" placeholder="Search">
+            </form>
         </ul>
     </nav>
     <main>
-        <!-- Om du har logget inn og kommer fra login-siden kjører denne -->
-        {% if login_message %}
-        <p style="color: green;">{{ login_message }}</p>
-        {% endif %}
-
         <!-- Koden under er tatt fra flask sin nettside med dokumentasjon -->
+        <!-- Henter (og viser) flashes om det er noen -->
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul class=flashes>

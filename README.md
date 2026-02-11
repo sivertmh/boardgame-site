@@ -38,20 +38,31 @@ Løsningen er laget for de som spiller og liker brettspill, og de som vil finne 
 
 #### Resultat
 
-*Tomt for nå, bør snart fylles ut. Ellers har jeg glemt det :(*
+Dette er jo det andre ordentlige Flask-prosjektet vi har hatt med 2IMI, og denne gangen gikk det bedre. En god grunn til det var at 
 
 #### Mulige Forbedringer
 
 Det er noen funksjoner og aspekter til prosjektet som kunne trengt forbedring. Enten om det er en revisjon av noe eller en helt ny funksjon. Her er noen konkrete ideer basert på min brukertesting:
 
+**Ville brukt litt mer tid på stil**
+
+Selv om dette ikke er hovedfokuset med et slikt prosjekt, blir det enklere å brukerteste med en nettside som ser ordentlig ut. Også, om man presenterer prosjektet til noen andre vil det være enklere å forstå hva nettsiden gjør om man har et bedre visuelt layout.
+
+**Egen side for hvert spill**
+
+Dette kan nesten klassifiseres som en manglende funksjon. Hver av spillene på forsiden, eller hvis du søker de opp, burde ha sin egen side hvor du får flere detaljer og beskrivelse av spillet. Selv om dette ikke sto i målene jeg satt, er ikke nettsiden helt komplett uten. Hvis jeg velger å fortsette på prosjektet, er dette en viktig del.
+
 **Brukeradministrering**
+
 Admin har oversikt over brukere og kan angi roller. Man slipper da å manuelt gå inn i database med SSH. Dette gir også en reell grunn til å ha en editor-rolle, da admin har samme tillatelser som editor, og nå faktisk fler.
 
 **Rolleindikator**
+
 Muligheten til å se hva slags rolle din bruker har. Det kan gjøres ved å ha tekst i navbar eller i navbar men i dropdown når man er logget inn.
 
 **Innloggingsstatus**
-Dette ligner en del på rolleindikator-ideen, men enklere. Brukeren kan se at de er logget inn. Kan gjøres ved å vise brukernavn i navbar. 
+
+Dette ligner en del på rolleindikator-ideen, men enklere. Brukeren kan se at de er logget inn. Kan gjøres ved å vise brukernavn i navbar.
 
 ---
 
@@ -104,7 +115,7 @@ Systemet skal minst ha følgende funksjoner:
 **Tabell 2:**
 
 - Navn: boardgame
-- Beskrivelse: Inneholder navnet (til brettspillet), hvilket år det kom ut, de som lagde det, de som publiserte det og en beskrivelse. 
+- Beskrivelse: Inneholder navnet (til brettspillet), hvilket år det kom ut, de som lagde det, de som publiserte det og en beskrivelse.
 
 **Tabell 3:**
 
@@ -158,7 +169,7 @@ INSERT INTO role (name) VALUES ("admin"), ("editor"), ("user");
 -- Her ser man hvilke id som tilhører hvilke rolle
 ```
 
---- 
+---
 
 **Kilder:**
 
@@ -174,7 +185,7 @@ Bytte passord i Mysql: [https://dev.mysql.com/doc/refman/8.4/en/alter-user.html]
 
 Bcrypt CHAR(60): [https://stackoverflow.com/questions/5881169/what-column-type-length-should-i-use-for-storing-a-bcrypt-hashed-password-in-a-d](https://stackoverflow.com/questions/5881169/what-column-type-length-should-i-use-for-storing-a-bcrypt-hashed-password-in-a-d)
 
-*SQL Data Types*: [https://www.geeksforgeeks.org/sql/sql-data-types/](https://www.geeksforgeeks.org/sql/sql-data-types/)
+_SQL Data Types_: [https://www.geeksforgeeks.org/sql/sql-data-types/](https://www.geeksforgeeks.org/sql/sql-data-types/)
 
 Innholdstekst tatt fra Boardgamegeeks nettsider: [https://boardgamegeek.com](https://boardgamegeek.com)
 
@@ -182,4 +193,8 @@ Flash med flask: [https://flask.palletsprojects.com/en/stable/patterns/flashing/
 
 Lage roller i mysql (system, ikke i oppgave): [https://www.geeksforgeeks.org/sql/sql-creating-roles/](https://www.geeksforgeeks.org/sql/sql-creating-roles/)
 
-*How to use Flask-Session in Python Flask*: [https://www.geeksforgeeks.org/python/how-to-use-flask-session-in-python-flask/](https://www.geeksforgeeks.org/python/how-to-use-flask-session-in-python-flask/)
+_How to use Flask-Session in Python Flask_: [https://www.geeksforgeeks.org/python/how-to-use-flask-session-in-python-flask/](https://www.geeksforgeeks.org/python/how-to-use-flask-session-in-python-flask/)
+
+_Building a Search Feature in a Python Flask App_: [https://ochoaprojects.com/posts/FlaskAppWithSimpleSearch/](https://ochoaprojects.com/posts/FlaskAppWithSimpleSearch/)
+
+_MySQL LIKE Operator_:[https://www.w3schools.com/mysql/mysql_like.asp](https://www.w3schools.com/mysql/mysql_like.asp)
