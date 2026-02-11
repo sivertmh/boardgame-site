@@ -73,7 +73,6 @@ def register():
         
         conn = db_connect()
         cursor = conn.cursor()
-        
         username = request.form['username']
         epost = request.form['email']
         # kode fra geeksforgeeks.org for hashing med bcrypt
@@ -135,16 +134,19 @@ def register_boardgame():
     cursor = conn.cursor()
     
     # Fra "How to use Flask-Session in Python Flask". Se kilder.
+    # Sjekker om bruker er logget inn og redirecter til index hvis ikke.
     if not session.get("username") or not session.get("role_id"):
         flash("You must be logged in (as admin or editor) to access '/register_boardgame'.")
         return redirect(url_for("index"))
     
     # Kodesnutt er fikset/minimalisert ved hjelp av KI.
+    # Sjekker om bruker har riktig rolle, hvis ikke blir du redirected til index.
     # Roller: admin (1), editor (2), user (3).
     if session["role_id"] not in (1, 2):
         flash("Only admins and editors can access '/register_boardgame'.")
         return redirect(url_for("index"))
     
+    # Kjøres ved POST-ing av login-form.
     if request.method == "POST":
         bg_name = request.form['name']
         year = request.form['year']

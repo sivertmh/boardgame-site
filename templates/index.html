@@ -9,13 +9,18 @@
 
 <body>
     <nav>
-        <a href="{{ url_for('index') }}"><h1>Internet Boardgame Database</h1></a>
+        <a href="{{ url_for('index') }}">
+            <h1>Internet Boardgame Database</h1>
+        </a>
         <ul>
             <li><a class="active" href="{{ url_for('index') }}">Homepage</a></li>
             <li><a href="{{ url_for('login') }}">Log In</a></li>
             <!-- Lenke vises bare ved riktig rolle (admin/editor) -->
             {% if session.get("role_id") in (1, 2) %}
             <li><a href="{{ url_for('register_boardgame') }}">Register Boardgame</a></li>
+            {% endif %}
+            {% if session.get("username") or session.get("role_id") %}
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             {% endif %}
         </ul>
     </nav>
