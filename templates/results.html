@@ -31,9 +31,11 @@
         </ul>
     </nav>
     <main>
-        <h1>Results for: </h1>
+        <b>Results for: {{ query }}</b>
         <ul>
-
+            {% for i in results %}
+            <li>{i}</li>
+            {% endfor %}
         </ul>
     </main>
 </body>

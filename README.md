@@ -38,7 +38,11 @@ Løsningen er laget for de som spiller og liker brettspill, og de som vil finne 
 
 #### Resultat
 
-Dette er jo det andre ordentlige Flask-prosjektet vi har hatt med 2IMI, og denne gangen gikk det bedre. En god grunn til det var at 
+Dette er jo det andre ordentlige Flask-prosjektet vi har hatt med 2IMI, og denne gangen gikk det bedre. En god grunn til dette er at målet var mer realistisk å oppnå denne gangen. Det var mye mer produktivt å ha en gjennomførbar plan. Da går motivasjonen opp og man blir ikke sittende stille å tenke på hvor man skal begynne, isteden fører det til en effekt av en positiv "snowball"-effekt. 
+
+På den andre siden gikk noen ting kanskje ikke akkurat etter plan. For eksempel så fokuserte jeg lite på nettsidens stylesheet, litt som sist, selv om jeg ville bruke lenger tid på dette. En ting til var at jeg undergravde viktigheten av innhold i databasen. Mer tid burde blitt satt av bare til å legge til nye brettspill, slik at funksjonene blir ordentlig vist frem. 
+
+Uansett vil jeg vi at dette prosjektet på mange måter var en forbedring fra forrige gang. Noen feil ble repetert, i tillegg til at nye oppsto. Totalt sett fra dette prosjektet har lært enormt mye nytt, fra å lage innloggings-side med Session, lagre passord trygt i en database med Bcrypt, og helt til å lage søke-funksjon i Python/Flask.
 
 #### Mulige Forbedringer
 
