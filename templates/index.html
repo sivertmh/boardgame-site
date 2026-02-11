@@ -9,19 +9,18 @@
 
 <body>
     <nav>
-        <h1>Internet Boardgame Database</h1>
+        <a href="{{ url_for('index') }}"><h1>Internet Boardgame Database</h1></a>
         <ul>
             <li><a class="active" href="{{ url_for('index') }}">Homepage</a></li>
-            <li><a href="{{ url_for('register') }}">Register</a></li>
             <li><a href="{{ url_for('login') }}">Log In</a></li>
+            <!-- Lenke vises bare ved riktig rolle (admin/editor) -->
+            {% if session.get("role_id") in (1, 2) %}
+            <li><a href="{{ url_for('register_boardgame') }}">Register Boardgame</a></li>
+            {% endif %}
         </ul>
     </nav>
     <main>
-        <!-- Om du kommer fra login-siden kjører disse -->
-        {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-        {% endif %}
-
+        <!-- Om du har logget inn og kommer fra login-siden kjører denne -->
         {% if login_message %}
         <p style="color: green;">{{ login_message }}</p>
         {% endif %}
@@ -36,7 +35,6 @@
         </ul>
         {% endif %}
         {% endwith %}
-        {% block body %}{% endblock %}
 
         <!-- Viser alle brettspill fra db her på forsiden -->
         {% if bg_info %}

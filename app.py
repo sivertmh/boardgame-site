@@ -4,14 +4,14 @@ import mysql.connector
 from dotenv import load_dotenv
 import bcrypt
 
+# Boilerplate-kode.
 load_dotenv()
-
 app = Flask(__name__)
 app.secret_key = os.environ.get("APP_SECRET_KEY")
 
-# db-kobling
+# Db-kobling.
 def db_connect():
-    # kobler til db med info fra .env
+    # Kobler til db med info fra Environment-fil.
     return mysql.connector.connect(
         database=os.environ.get("DB_NAME"),
         host=os.environ.get("DB_HOST", "localhost"),
@@ -24,8 +24,8 @@ def create_tables():
     conn = db_connect()
     cursor = conn.cursor()
     
-    # lager user-tabell
-    # bør bruke backticks på navn user pga det er en ting i mysql fra før
+    # Lager user-tabell.
+    # Bruker backticks på tabellnavnet "user". Dette er pga at det er en ting i Mysql fra før.
     cursor.execute("""
         CREATE TABLE `user` (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -34,7 +34,7 @@ def create_tables():
             password CHAR(60) NOT NULL,
             role VARCHAR(50)
                        )""")
-    # lager boardgame-tabell
+    # Lager boardgame-tabell.
     cursor.execute("""
         CREATE TABLE boardgame (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -45,27 +45,28 @@ def create_tables():
             description TEXT CHARACTER SET utf8mb4
             )""")
     conn.commit()
-    
+
+# Prøver å kjøre funksjon "create_tables".
 try:
     create_tables()
     print("Tabeller ble laget!")
 except:
-    print("Tabeller ble ikke laget. (finnes kanskje fra før)")
+    print("Tabeller ble ikke laget. (ignorer om de finnes fra før)")
 
-# Route for hjemside
+# Route for hjemside.
 @app.route("/")
 def index():
     
     conn = db_connect()
     cursor = conn.cursor()
 
-    # henter info som skal vises på forside i en tuple
+    # Henter info som skal vises på forside i en tuple.
     cursor.execute("SELECT name, year_published, publisher FROM boardgame")
     bg_info = cursor.fetchall()
     
     return render_template("index.html", bg_info=bg_info)
 
-# Route for registrering
+# Route for registrering.
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -104,40 +105,44 @@ def login():
         conn = db_connect()
         cursor = conn.cursor(dictionary=True)
         
-        # henter brukernavn
+        # Henter brukernavn.
         cursor.execute("SELECT * FROM user WHERE username=%s", (username,))
         user = cursor.fetchone()
         cursor.close()
         conn.close()
         
-        # henter passord og gjør om til bytes
+        # Henter passord og gjør om til bytes.
         if user:
             db_password = user['password'].encode('utf-8')
 
         if bcrypt.checkpw(password, db_password):
             session['username'] = user['username']
-            session['role'] = user['role']
+            session['role_id'] = user['role_id']
             
-            return render_template("index.html", login_message="You are now logged in!")
+            flash("You are now logged in!")
+            return redirect(url_for("index"))
+            
         else:
-            return render_template("index.html", error_message="Invalid username or password")
+            flash("Invalid username or password")
+            return redirect(url_for("login"))
     return render_template("login.html")
 
-# Route for registrering av brettspill
+# Route for registrering av brettspill.
 @app.route("/register_boardgame", methods=["GET", "POST"])
 def register_boardgame():
     
     conn = db_connect()
     cursor = conn.cursor()
     
-    # kodesnutt fikset/minimalisert ved hjelp av KI
-    if 'username' not in session or 'role' not in session:
-        flash("You must be logged in.")
-        return redirect(url_for("login"))
+    # Fra "How to use Flask-Session in Python Flask". Se kilder.
+    if not session.get("username") or not session.get("role_id"):
+        flash("You must be logged in (as admin or editor) to access '/register_boardgame'.")
+        return redirect(url_for("index"))
     
-    # samme som sistnevnt
-    if session['role'] != 'admin':
-        flash("Admins only.")
+    # Kodesnutt er fikset/minimalisert ved hjelp av KI.
+    # Roller: admin (1), editor (2), user (3).
+    if session["role_id"] not in (1, 2):
+        flash("Only admins and editors can access '/register_boardgame'.")
         return redirect(url_for("index"))
     
     if request.method == "POST":
@@ -147,21 +152,29 @@ def register_boardgame():
         publisher = request.form['publisher']
         desc = request.form['description']
         
-        conn = db_connect()
-        cursor = conn.cursor()
+        if not bg_name:
+            flash("Name is required.")
+            return redirect(url_for("register_boardgame"))
         
-        cursor.execute("""INSERT INTO boardgame 
-                            (name, 
+        cursor.execute("""INSERT INTO boardgame ( 
+                            name, 
                             year_published, 
                             creator, 
                             publisher, 
-                            description) VALUES (%s, %s, %s, %s, %s)""", 
-                            (bg_name, year, creator, publisher, desc))
-
-        conn.commit()
-        cursor.close()
-        conn.close()
+                            description
+                            ) VALUES (%s, %s, %s, %s, %s)""", (bg_name, year, creator, publisher, desc))
         
         flash("Boardgame registered!", "success")
         return redirect(url_for("register_boardgame"))
-    return render_template("index.html")
+    
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
+    return render_template("register_boardgame.html")
+
+# Route for å logge ut.
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("index"))

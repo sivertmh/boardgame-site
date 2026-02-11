@@ -18,25 +18,40 @@ Sivert M. H. (Individuelt prosjekt)
 
 - Hva er prosjektet?
 
-Ideen er å lage en nettside for folk som er interreserte i brettspill. Brukeren skal kunne logge inn, registrere, søke og få info om brettspill, og mer. Litt inspirasjon kommmer av nettsider som imdb.com og boardgamegeek.com hvor du kan søke opp og legge igjen en anmeldelse, så jeg kan prøve å lage en slik funksjon.
+Ideen er å lage en nettside for folk som er interreserte i brettspill. Brukeren skal kunne logge inn, registrere, søke og få info om brettspill, og om du er admin/editor, kunne legge til brettspill i databasen. Litt inspirasjon kommmer av nettsider som IMDb og Boardgamegeek.
 
 - Hvilket problem løser det?
 
-Nettsiden skal la deg som sagt søke opp brettspill og legge igjen anmeldelser. Dette kan man bruke som info til om man vil prøve et nytt et eller ikke, eller si noe om hvilke målgruppper spillet passer. Da slipper du å komme til spillekvelden med et spill ingen liker!
+Nettsiden skal la deg som sagt søke opp brettspill og finne info om de. Dette kan man bruke som et verktøy for å researche spillet eller si noe om hvilke målgruppper spillet passer. Da slipper du å komme til spillekvelden med et spill ingen liker!
 
 - Hvorfor er løsningen nyttig?
 
-Nettsiden funker som et oppslagsverk for brettspill. Det betyr at du kan søke opp spill du allerede har for å se hva andre enn deg synes om det. Dersom du ikke har et spill kan du bruke nettsiden til å finne et nytt et som er gøy.
+Nettsiden funker som et oppslagsverk for brettspill. Det betyr at du kan søke opp spill du allerede har for kanskje å hvordan det spilles om du f.eks. mistet reglene. Dersom du ikke har et spill kan du bruke nettsiden til å lese deg opp på nett isteden for å måtte dra til byen eller kjøpesenteret.
 
 ### Målgruppe
 
 Hvem er løsningen laget for?
 
-Løsningen er laget for de som spiller og liker brettspill, og de som vil finne ut mer om de. Det kan f.eks. være før de velger å kjøpe det, eller ikke pga dårlige anmeldelser.
+Løsningen er laget for de som spiller og liker brettspill, og de som vil finne ut mer om de. Det kan f.eks. være før de velger å kjøpe det, eller ikke, p.g.a. det de leste om det. Det kan også f.eks. være de som har mistet regler og glemte hva målet i spillet var som bruker siden for å minne seg selv på dette.
 
 ### Refleksjon
 
+#### Resultat
 
+*Tomt for nå, bør snart fylles ut. Ellers har jeg glemt det :(*
+
+#### Mulige Forbedringer
+
+Det er noen funksjoner og aspekter til prosjektet som kunne trengt forbedring. Enten om det er en revisjon av noe eller en helt ny funksjon. Her er noen konkrete ideer basert på min brukertesting:
+
+**Brukeradministrering**
+Admin har oversikt over brukere og kan angi roller. Man slipper da å manuelt gå inn i database med SSH. Dette gir også en reell grunn til å ha en editor-rolle, da admin har samme tillatelser som editor, og nå faktisk fler.
+
+**Rolleindikator**
+Muligheten til å se hva slags rolle din bruker har. Det kan gjøres ved å ha tekst i navbar eller i navbar men i dropdown når man er logget inn.
+
+**Innloggingsstatus**
+Dette ligner en del på rolleindikator-ideen, men enklere. Brukeren kan se at de er logget inn. Kan gjøres ved å vise brukernavn i navbar. 
 
 ---
 
@@ -50,9 +65,9 @@ Systemet skal minst ha følgende funksjoner:
 
 3. Søke etter brettspill
 
-4. Registrere brettspill (hvis du er admin)
+4. Registrere brettspill (om admin/editor)
 
-5. Anmelde
+5. Ulikt innhold/tillatelser basert på rolle (registrering av brettspill)
 
 ---
 
@@ -74,7 +89,6 @@ Systemet skal minst ha følgende funksjoner:
 
 - GitHub
 - GitHub Projects (Kanban)
-- Figma
 
 ---
 
@@ -92,19 +106,59 @@ Systemet skal minst ha følgende funksjoner:
 - Navn: boardgame
 - Beskrivelse: Inneholder navnet (til brettspillet), hvilket år det kom ut, de som lagde det, de som publiserte det og en beskrivelse. 
 
-_(Minst 2–4 tabeller)_
+**Tabell 3:**
 
-### Eksempel på tabellstruktur
+- Navn: role
+- Beskrivelse: Inneholder forskjellige roller som brukere kan ha. Her må jeg kjøre en manuell Insert, eller lage en funksjon i Python-filen.
+
+### Tabellstruktur i Databasen
 
 ```sql
-`user` (
-id INT AUTO_INCREMENT PRIMARY KEY,
-username VARCHAR(255) NOT NULL UNIQUE,
-email VARCHAR(255) NOT NULL UNIQUE,
-password CHAR(60) NOT NULL,
-role VARCHAR(50)
+-- Tabell 1
+
+CREATE TABLE `user` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password CHAR(60) NOT NULL,
+    role_id INT, FOREIGN KEY (role_id) REFERANCES role(id)
+);
+
+-- Tabell 2
+
+CREATE TABLE boardgame (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    year_published INT,
+    creator VARCHAR(255),
+    publisher VARCHAR(255),
+    description TEXT CHARACTER SET utf8mb4
+    );
+
+-- Tabell 3
+
+CREATE TABLE role (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(20)
 )
+
+-- Innhold til tabell 3
+
+INSERT INTO role (name) VALUES ("admin"), ("editor"), ("user");
+
+-- Rolle-tabellens innhold ser dermed slik ut:
+
++----+--------+
+| id | name   |
++----+--------+
+|  1 | admin  |
+|  2 | editor |
+|  3 | user   |
++----+--------+
+-- Her ser man hvilke id som tilhører hvilke rolle
 ```
+
+--- 
 
 **Kilder:**
 
@@ -120,8 +174,12 @@ Bytte passord i Mysql: [https://dev.mysql.com/doc/refman/8.4/en/alter-user.html]
 
 Bcrypt CHAR(60): [https://stackoverflow.com/questions/5881169/what-column-type-length-should-i-use-for-storing-a-bcrypt-hashed-password-in-a-d](https://stackoverflow.com/questions/5881169/what-column-type-length-should-i-use-for-storing-a-bcrypt-hashed-password-in-a-d)
 
-Datatyper i SQL: [https://www.geeksforgeeks.org/sql/sql-data-types/](https://www.geeksforgeeks.org/sql/sql-data-types/)
+*SQL Data Types*: [https://www.geeksforgeeks.org/sql/sql-data-types/](https://www.geeksforgeeks.org/sql/sql-data-types/)
 
-Innholdstekst osv av Boardgamegeek: [https://boardgamegeek.com](https://boardgamegeek.com)
+Innholdstekst tatt fra Boardgamegeeks nettsider: [https://boardgamegeek.com](https://boardgamegeek.com)
 
 Flash med flask: [https://flask.palletsprojects.com/en/stable/patterns/flashing/](https://flask.palletsprojects.com/en/stable/patterns/flashing/)
+
+Lage roller i mysql (system, ikke i oppgave): [https://www.geeksforgeeks.org/sql/sql-creating-roles/](https://www.geeksforgeeks.org/sql/sql-creating-roles/)
+
+*How to use Flask-Session in Python Flask*: [https://www.geeksforgeeks.org/python/how-to-use-flask-session-in-python-flask/](https://www.geeksforgeeks.org/python/how-to-use-flask-session-in-python-flask/)
