@@ -15,7 +15,7 @@
         </a>
         <ul>
             <li><a class="active" href="{{ url_for('index') }}">Homepage</a></li>
-            <li><a href="{{ url_for("login") }}">Log In</a></li>
+            <li><a href="{{ url_for(" login") }}">Log In</a></li>
             <!-- Lenke vises bare ved riktig rolle (admin/editor) -->
             {% if session.get("role_id") in (1, 2) %}
             <li><a href="{{ url_for('register_boardgame') }}">Register Boardgame</a></li>
@@ -44,17 +44,20 @@
         {% endif %}
         {% endwith %}
 
-        <!-- Viser alle brettspill fra db her på forsiden -->
-        {% if bg_info %}
-        {% for i in bg_info %}
-        <div class="bg-info-cont">
-            <li class="bg-name-txt">{{ i[0] }} ({{ i[1] }})</li><br>
-            <p class="bg-publisher-txt">{{ i[2] }}</p>
+        <!-- Viser alle brettspill fra db -->
+        <div class="boardgame-showcase-cont">
+            {% if bg_info %}
+            {% for i in bg_info %}
+            <div class="boardgame-card-cont">
+                <img src="{{ i[0] }}" alt="Box cover image for {{ i[0] }}">
+                <p>{{ i[0] }} ({{ i[1] }})</p>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>Looks empty here...</p>
+            {% endif %}
         </div>
-        {% endfor %}
-        {% else %}
-        <p>Looks empty here...</p>
-        {% endif %}
+
     </main>
 </body>
 
