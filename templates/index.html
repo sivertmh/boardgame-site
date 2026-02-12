@@ -15,7 +15,7 @@
         </a>
         <ul>
             <li><a class="active" href="{{ url_for('index') }}">Homepage</a></li>
-            <li><a href="{{ url_for('login') }}">Log In</a></li>
+            <li><a href="{{ url_for("login") }}">Log In</a></li>
             <!-- Lenke vises bare ved riktig rolle (admin/editor) -->
             {% if session.get("role_id") in (1, 2) %}
             <li><a href="{{ url_for('register_boardgame') }}">Register Boardgame</a></li>
@@ -48,7 +48,7 @@
         {% if bg_info %}
         {% for i in bg_info %}
         <div class="bg-info-cont">
-            <p class="bg-name-txt">{{ i[0] }} ({{ i[1] }})</p><br>
+            <li class="bg-name-txt">{{ i[0] }} ({{ i[1] }})</li><br>
             <p class="bg-publisher-txt">{{ i[2] }}</p>
         </div>
         {% endfor %}

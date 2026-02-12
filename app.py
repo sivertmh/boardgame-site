@@ -188,7 +188,7 @@ def perform_search(query):
     cursor = conn.cursor()
 
     # Kjører søk i database med query fra bruker.
-    cursor.execute("SELECT * FROM boardgame WHERE username LIKE %s", (query,))
+    cursor.execute("SELECT * FROM boardgame WHERE name LIKE %s", (query,))
     results = cursor.fetchall()
 
     conn.close()
@@ -199,6 +199,7 @@ def perform_search(query):
 # Creds til Ochoaprojects. Se kilder.
 @app.route('/search', methods=['POST'])
 def search():
-    query = request.form['query']
+    user_query = request.form['query']
+    query = '%' + request.form['query'] + '%'
     results = perform_search(query)
-    return render_template('results.html', query=query, results=results)
+    return render_template('results.html', user_query=user_query, results=results)
