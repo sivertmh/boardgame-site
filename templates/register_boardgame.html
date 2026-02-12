@@ -33,22 +33,21 @@
     </nav>
     <main>
         <h2>Register a Boardgame</h2>
-        <form method="POST" action="{{ url_for('register_boardgame') }}">
-            <label for="name">Name of boardgame:</label><br>
+        <form method="POST">
+            <label for="name">Name of boardgame</label><br>
             <input type="text" id="name" name="name" required><br><br>
 
-            <label for="year">Year:</label><br>
+            <label for="year">Year</label><br>
             <input type="text" id="year" name="year"><br><br>
 
-            <label for="creator">Creator:</label><br>
+            <label for="creator">Creator</label><br>
             <input type="text" id="creator" name="creator"><br><br>
 
-            <label for="publisher">Publisher:</label><br>
+            <label for="publisher">Publisher</label><br>
             <input type="text" id="publisher" name="publisher"><br><br>
 
-            <label for="description">Description:</label><br>
-            <input type="text" id="description" name="description"><br><br>
-            <textarea name="description" placeholder="Description of the boardgame..."></textarea>
+            <label for="description">Description</label><br>
+            <textarea id="description" name="description" placeholder="Description of the boardgame..."></textarea><br><br>
 
             <button type="submit">Register boardgame</button>
         </form>
