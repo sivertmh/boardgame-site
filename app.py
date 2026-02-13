@@ -24,27 +24,40 @@ def create_tables():
     conn = db_connect()
     cursor = conn.cursor()
     
-    # Lager user-tabell.
-    # Bruker backticks på tabellnavnet "user". Dette er pga at det er en ting i Mysql fra før.
+# Lager user-tabell.
+# Bruker backticks på tabellnavnet "user". Dette er pga at det er en ting i Mysql fra før.
     cursor.execute("""
-        CREATE TABLE `user` (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            username VARCHAR(255) NOT NULL UNIQUE,
-            email VARCHAR(255) NOT NULL UNIQUE,
-            password CHAR(60) NOT NULL,
-            role VARCHAR(50)
-                       )""")
-    # Lager boardgame-tabell.
+CREATE TABLE `user` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password CHAR(60) NOT NULL,
+    role_id INT, FOREIGN KEY (role_id) REFERENCES role(id)
+)
+""")
+
+# Lager boardgame-tabell.
     cursor.execute("""
-        CREATE TABLE boardgame (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(255) NOT NULL,
-            year_published INT,
-            creator VARCHAR(255),
-            publisher VARCHAR(255),
-            description TEXT CHARACTER SET utf8mb4
-            )""")
+CREATE TABLE boardgame (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    year_published INT,
+    creator VARCHAR(255),
+    publisher VARCHAR(255),
+    img_filename VARCHAR(255),
+    description TEXT CHARACTER SET utf8mb4
+    )
+""")
+
+    cursor.execute("""
+CREATE TABLE role (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(20)
+)
+""")
+
     conn.commit()
+    conn.close()
 
 # Prøver å kjøre funksjon "create_tables".
 try:
@@ -120,7 +133,6 @@ def login():
             
             flash("You are now logged in!")
             return redirect(url_for("index"))
-            
         else:
             flash("Invalid username or password")
             return redirect(url_for("login"))
@@ -152,8 +164,9 @@ def register_boardgame():
         year = request.form['year']
         creator = request.form['creator']
         publisher = request.form['publisher']
+        img_filepath = "../static/media/" + request.form['img-filename']
         desc = request.form['description']
-        
+
         if not bg_name:
             flash("Name is required.")
             return redirect(url_for("register_boardgame"))
@@ -162,14 +175,17 @@ def register_boardgame():
                             name, 
                             year_published, 
                             creator, 
-                            publisher, 
+                            publisher,
+                            img_filename,
                             description
-                            ) VALUES (%s, %s, %s, %s, %s)""", (bg_name, year, creator, publisher, desc))
+                            ) VALUES (%s, %s, %s, %s, %s, %s)""", (bg_name, year, creator, publisher, img_filepath, desc))
+        conn.commit()
+        
+        
         
         flash("Boardgame registered!", "success")
         return redirect(url_for("register_boardgame"))
     
-    conn.commit()
     cursor.close()
     conn.close()
     

@@ -136,7 +136,7 @@ CREATE TABLE `user` (
     username VARCHAR(255) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
     password CHAR(60) NOT NULL,
-    role_id INT, FOREIGN KEY (role_id) REFERANCES role(id)
+    role_id INT, FOREIGN KEY (role_id) REFERENCES role(id)
 );
 
 -- Tabell 2
@@ -147,6 +147,7 @@ CREATE TABLE boardgame (
     year_published INT,
     creator VARCHAR(255),
     publisher VARCHAR(255),
+    img_filename VARCHAR(255),
     description TEXT CHARACTER SET utf8mb4
     );
 
@@ -171,6 +172,14 @@ INSERT INTO role (name) VALUES ("admin"), ("editor"), ("user");
 |  3 | user   |
 +----+--------+
 -- Her ser man hvilke id som tilhører hvilke rolle
+```
+
+### Hvordan sette opp dette systemet
+
+Klon prosjektet:
+
+```git
+git clone https://github.com/sivertmh/boardgame-site.git
 ```
 
 ---

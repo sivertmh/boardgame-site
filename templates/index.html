@@ -15,13 +15,18 @@
         </a>
         <ul>
             <li><a class="active" href="{{ url_for('index') }}">Homepage</a></li>
+            <!-- Hvis ikke logget inn -->
+            {% if not (session.get("username") and session.get("role_id")) %}
             <li><a href="{{ url_for('login') }}">Log In</a></li>
-            <!-- Lenke vises bare ved riktig rolle (admin/editor) -->
+            {% endif %}
+            <!-- Hvis man er admin/editor -->
             {% if session.get("role_id") in (1, 2) %}
             <li><a href="{{ url_for('register_boardgame') }}">Register Boardgame</a></li>
             {% endif %}
+            <!-- Hvis logget inn -->
             {% if session.get("username") or session.get("role_id") %}
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+            <li>Logged in as: {{ session['username'] }}</li>
             {% endif %}
             <!-- Søkefelt -->
             <!-- Creds til Ochoaprojects. Se kilder. Modifisert. -->
@@ -49,7 +54,7 @@
             {% if bg_info %}
             {% for i in bg_info %}
             <div class="boardgame-card-cont">
-                <img src="{{ i[0] }}" alt="Box cover image for {{ i[0] }}">
+                <img src="../static/media/ticket_to_ride.webp" alt="Box cover image for {{ i[0] }}">
                 <p>{{ i[0] }} ({{ i[1] }})</p>
             </div>
             {% endfor %}
